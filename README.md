@@ -44,6 +44,7 @@ When this user on GitHub has a login status of true
 
 Then set the JSON value at path user.id to a known value of GITHUB_USER_ID
 ```
+![Preview of AuthGuardian rule #1](imgs/rule_1.png?raw=true)
 
 
 ```
@@ -52,6 +53,7 @@ When this user on GitHub belongs to an organization named MY_ORG
 
 Then add to the JSON list at path user.roles a static JSON value of "admin"
 ```
+![Preview of AuthGuardian rule #2](imgs/rule_2.png?raw=true)
 
 That should be enough that your users can simply log in with GitHub to
 authenticate, but any fields in your schema requiring a "admin" role will only
