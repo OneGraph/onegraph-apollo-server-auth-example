@@ -57,35 +57,28 @@ const server = new ApolloServer({
     isAuthenticated: isAuthenticatedDirective,
   },
   context: async incoming => {
+    // Anything else you'd like in the resolver context goes here.
+    let context = {};
+
     // Extract the JWT using OneGraph's helper function
     const token = extractBearerToken(incoming.req);
 
     if (!token) {
-      return {jwt: null};
+      return {...context, jwt: null};
     }
-
-    console.log(
-      'Token: ',
-      JSON.stringify(
-        JSON.parse(
-          Buffer.from(token.split('.')[1], 'base64').toString('binary'),
-        ),
-        null,
-        2,
-      ),
-    );
 
     // If we have a token, try to decode and verify it using either
     // public/private or shared-secret, depending on the preference
-    // stored in the JWT
+    // stored in the JWT. If we fail, discard the token and return
+    // a mostly-empty context
     try {
       const decoded = await verifyJwt(token).catch(rejection =>
         console.warn(`JWT verification failed: `, rejection),
       );
-      return {jwt: decoded};
+      return {...context, jwt: decoded};
     } catch (rejection) {
       console.warn(rejection);
-      return {jwt: null};
+      return {...context, jwt: null};
     }
   },
 });
