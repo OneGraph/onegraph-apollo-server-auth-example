@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prettier": "prettier --write \"src/**/*.js\" README.md",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,5 +19,15 @@
     "jsonwebtoken": "8.5.1",
     "jwks-rsa": "1.6.0",
     "@sgrove/onegraph-apollo-server-auth": "2.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^1.15.2"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true,
+    "printWidth": 80
   }
 }

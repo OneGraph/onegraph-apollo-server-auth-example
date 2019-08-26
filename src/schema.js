@@ -14,4 +14,4 @@ type Company {
 }
 `;
 
-module.exports = { schema };
+module.exports = {schema};
