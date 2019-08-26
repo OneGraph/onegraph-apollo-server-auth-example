@@ -1,0 +1,22 @@
+{
+  "name": "onegraph-apollo-server-auth-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server-express": "^2.8.1",
+    "apollo-server": "^2.8.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "graphql": "^14.4.2",
+    "graphql-tools": "^4.0.5",
+    "jsonwebtoken": "8.5.1",
+    "jwks-rsa": "1.6.0",
+    "@sgrove/onegraph-apollo-server-auth": "2.0.1"
+  }
+}
