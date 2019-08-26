@@ -35,6 +35,28 @@ node src/index.js
 Now you can make GraphQL requests against `http://localhost:3010/graphql` with
 GraphiQL app.
 
+## Configure your auth rules in AuthGuardian
+A good starter set of rules might be:
+
+```
+Rule 1:
+When this user on GitHub has a login status of true
+
+Then set the JSON value at path user.id to a known value of GITHUB_USER_ID
+```
+
+
+```
+Rule 2:
+When this user on GitHub belongs to an organization named MY_ORG
+
+Then add to the JSON list at path user.roles a static JSON value of "admin"
+```
+
+That should be enough that your users can simply log in with GitHub to
+authenticate, but any fields in your schema requiring a "admin" role will only
+be visible to GitHub users who are logged in and belong to `MY_ORG` on GitHub.
+
 ## Using a shared secret
 
 By default `onegraph-apollo-server-auth` just needs your `APP_ID`, and it can
