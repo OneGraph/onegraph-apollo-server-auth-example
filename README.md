@@ -32,7 +32,8 @@ That's it, you should be able to start the server!
 node src/index.js
 ```
 
-Now you can make GraphQL requests against `http://localhost:3010/graphql` with GraphiQL app.
+Now you can make GraphQL requests against `http://localhost:3010/graphql` with
+GraphiQL app.
 
 ## Using a shared secret
 

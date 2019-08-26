@@ -1,4 +1,6 @@
 const schema = `
+// These two custom directives are implemented by the
+// onegraph-apollo-server-auth package
 directive @isAuthenticated on QUERY | FIELD_DEFINITION
 directive @hasRole(oneOf: [String!]) on QUERY | FIELD_DEFINITION
 
