@@ -27,6 +27,9 @@ permissions for your Apollo server seamlessly.
 Find your APP_ID from the OneGraph dashboard, and replace it in `index.js`.
 ![Where to find your APP_ID on OneGraph](imgs/app_id_preview.png?raw=true)
 
+> Note that you cannot just use anyone else's OneGraph APP_ID, as your app will
+> be signed with different keys, and therefore your rules will not apply.
+
 That's it, you should be able to start the server!
 
 ```
