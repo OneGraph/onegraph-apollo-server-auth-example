@@ -18,7 +18,7 @@
     "graphql-tools": "^4.0.5",
     "jsonwebtoken": "8.5.1",
     "jwks-rsa": "1.6.0",
-    "@sgrove/onegraph-apollo-server-auth": "2.0.1"
+    "@sgrove/onegraph-apollo-server-auth": "2.0.2"
   },
   "devDependencies": {
     "prettier": "^1.15.2"

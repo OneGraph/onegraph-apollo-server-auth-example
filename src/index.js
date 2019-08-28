@@ -1,26 +1,21 @@
 const express = require('express');
 const {ApolloServer} = require('apollo-server-express');
-const {makeExecutableSchema} = require('graphql-tools');
-const {schema} = require('./schema.js');
+const {typeDefs} = require('./typeDefs.js');
 const {
-  extractBearerToken,
-  hasRoleDirective,
-  isAuthenticatedDirective,
+  hasRole,
+  isAuthenticated,
   makeOneGraphJwtVerifier,
 } = require('@sgrove/onegraph-apollo-server-auth');
 
 // OneGraph configuration
 // 1. Find your APP_ID by logging into the OneGraph dashboard
-const APP_ID = '<your-app-id>';
-// 2. The sharedSecret is optional! By default OneGraph will use public/private signatures.
-// const sharedSecret = "passwordpasswordpasswordpasswordpasswordpasswordpasswordpasswordpassword";
-
-const verifyJwt = makeOneGraphJwtVerifier(APP_ID, {
-  // Uncomment this line if you want to allow shared-secret JWTs
-  // sharedSecret: sharedSecret
+const verifyJwtFromHeaders = makeOneGraphJwtVerifier(ONEGRAPH_APP_ID, {
+  // Advanced usage: Uncomment this line if you want to allow shared-secret JWTs.
+  // This is optional, as by default OneGraph will use public/private signatures.
+  // sharedSecret: "passwordpasswordpasswordpasswordpasswordpasswordpasswordpasswordpassword"
 });
 
-// Some dummy-data backing our API
+// Some dummy-data backing our GraphQL API
 const companies = [
   {
     id: '1',
@@ -50,36 +45,26 @@ const resolvers = {
 
 // 2. The server (including populating the resolver context via JWT)
 const server = new ApolloServer({
-  typeDefs: schema,
+  typeDefs: typeDefs,
   resolvers,
   schemaDirectives: {
-    hasRole: hasRoleDirective,
-    isAuthenticated: isAuthenticatedDirective,
+    hasRole,
+    isAuthenticated,
   },
+  // The custom context function will decode, verify, and insert the JWT payload
+  // for both resolvers and the auth directives
   context: async incoming => {
-    // Anything else you'd like in the resolver context goes here.
-    let context = {};
+    let jwtContext;
 
-    // Extract the JWT using OneGraph's helper function
-    const token = extractBearerToken(incoming.req);
-
-    if (!token) {
-      return {...context, jwt: null};
-    }
-
-    // If we have a token, try to decode and verify it using either
-    // public/private or shared-secret, depending on the preference
-    // stored in the JWT. If we fail, discard the token and return
-    // a mostly-empty context
+    // Extract and verify the JWT using OneGraph's helper function
     try {
-      const decoded = await verifyJwt(token).catch(rejection =>
-        console.warn(`JWT verification failed: `, rejection),
-      );
-      return {...context, jwt: decoded};
-    } catch (rejection) {
-      console.warn(rejection);
-      return {...context, jwt: null};
-    }
+      jwtContext = await verifyJwtFromHeaders(incoming.req.headers);
+    } catch (e) {}
+
+    // Now add any custom properties you'd like to have in addition to the JWT
+    // context
+    const context = {...jwtContext, reqStart: Date.now()};
+    return context;
   },
 });
 

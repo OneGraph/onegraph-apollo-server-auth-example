@@ -1,19 +1,17 @@
-const schema = `
-// These two custom directives are implemented by the
-// onegraph-apollo-server-auth package
+const typeDefs = `
 directive @isAuthenticated on QUERY | FIELD_DEFINITION
 directive @hasRole(oneOf: [String!]) on QUERY | FIELD_DEFINITION
 
 type Query {
-  companies: [Company] @isAuthenticated
+  companies: [Company]
 }
 
 type Company {
   id: String!
   name: String @hasRole(oneOf: ["user"])
-  createdAt: String
+  createdAt: String @isAuthenticated
   accountBalance: Int! @hasRole(oneOf: ["admin"])
 }
 `;
 
-module.exports = {schema};
+module.exports = {typeDefs};
