@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "graphql-tools": "^4.0.5",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "9.0.0",
     "jwks-rsa": "1.6.0",
     "@sgrove/onegraph-apollo-server-auth": "2.0.2"
   },
